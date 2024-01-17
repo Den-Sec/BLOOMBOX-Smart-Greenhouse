@@ -59,10 +59,29 @@ And this is what the final BLOOMBOX setup looks like in action:
 
 Begin your BLOOMBOX journey with these simple steps:
 
-1. Clone this repository.
-2. Navigate to the `/schematics` folder and assemble your hardware as shown.
-3. Deploy the code from the `/code` directory onto your ESP32.
-4. Watch your plants thrive in their new smart environment!
+1. **Clone the Repository**: Start by cloning this repository to your local machine.
+
+2. **Hardware Assembly**:
+   - Navigate to the `/hardware/schematics` folder.
+   - Assemble your hardware components following the schematics provided.
+
+3. **Enclosure Assembly**:
+   - Navigate to the `/hardware/enclosure` folder.
+   - Assemble your greenhouse enclosure as shown in the provided designs.
+
+4. **Code Deployment**:
+   - Navigate to the `/src` directory.
+   - Deploy the code onto your ESP32 to control the greenhouse's functions.
+
+5. **Plant Configuration**:
+   - Locate the specific configuration file for your plant type. Each plant has its own configuration file.
+   - Upload the configuration file onto the SD card connected to the ESP32. This file contains the specifications and settings for your specific plant.
+
+6. **Smart Greenhouse Activation**:
+   - Ensure all components are properly connected and configured.
+   - Power on the ESP32 and watch your plants thrive in their new smart environment!
+
+Happy gardening!
 
 ## Contribute to BLOOMBOX 🤝
 
