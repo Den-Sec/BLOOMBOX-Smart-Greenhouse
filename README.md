@@ -34,7 +34,7 @@ BLOOMBOX is engineered to foster a perfect environment for plants, leveraging ad
 Here's the schematic of our setup to give you a clear idea of how BLOOMBOX components come together:
 
 <p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/9067bb86-4fa3-4c68-bdf8-34dae4e77545)" alt="BLOOMBOX Schematic">
+  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/hardware/schematics/Schematics BLOOMBOX.png" alt="BLOOMBOX Schematic">
 </p>
 
 And this is what the final BLOOMBOX setup looks like in action:
