@@ -1,8 +1,8 @@
-# BLOOMBOX - Smart Greenhouse
-
 <p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/289e457c-592f-4e86-87cc-6aa00146be92" alt="BLOOMBOX Logo">
+  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/289e457c-592f-4e86-87cc-6aa00146be92" alt="BLOOMBOX Logo" width="150">
 </p>
+
+# BLOOMBOX - Smart Greenhouse
 
 Welcome to BLOOMBOX, the next-generation smart greenhouse designed to empower plant growth through precision automation and monitoring
 
