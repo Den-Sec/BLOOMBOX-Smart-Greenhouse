@@ -21,7 +21,7 @@ BLOOMBOX is engineered to foster a perfect environment for plants, leveraging ad
 ## Enhanced Hardware Suite 🛠️
 
 - **ESP32 Microcontroller**: The powerhouse of BLOOMBOX, orchestrating all tasks seamlessly.
-- **DHT11 & MLX90614 Sensors**: Dual sensor setup for ambient and targeted temperature readings.
+- **DHT11 & MLX90614 Sensors**: Dual sensor setup for humidity and ambient temperature readings.
 - **Soil & Water Sensors**: For vigilant monitoring of moisture levels and reservoir status.
 - **Automated Water Pump**: Ensures your plants are watered just right, without waste.
 - **SD Card & RTC Modules**: For meticulous record-keeping and precise time management.
@@ -31,21 +31,29 @@ BLOOMBOX is engineered to foster a perfect environment for plants, leveraging ad
 
 ## Design and Schematics
 
+Here's the schematic of our setup to give you a clear idea of how BLOOMBOX components come together:
+
 <p align="center">
   <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/9067bb86-4fa3-4c68-bdf8-34dae4e77545)" alt="BLOOMBOX Schematic">
 </p>
 
-Here's the schematic of our setup to give you a clear idea of how BLOOMBOX components come together:
-
-<p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/f1ec1cf4-5c0a-4409-ace5-52588911d80a" alt="BLOOMBOX Final Render Front View">
-</p>
-
-<p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/6f8d8c77-40fd-4417-a59a-aab4fbf1435d" alt="BLOOMBOX Final Render 45'">
-</p>
-
 And this is what the final BLOOMBOX setup looks like in action:
+
+<p align="center">
+  <table>
+    <tr>
+      <td>
+        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/366a92b9-4b57-436d-816b-2e192ecfaabe" alt="BLOOM-BOX Inside">
+      </td>
+      <td>
+        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/ea4bae00-6bef-4f3c-84bf-0db95853c702" alt="BLOOMBOX 45' Render">
+      </td>
+      <td>
+        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/e7ffea42-e1b6-4e57-9faa-30051d715a65" alt="BLOOM-BOX Front Render">
+      </td>
+    </tr>
+  </table>
+</p>
 
 ## Quickstart Guide 🚀
 
