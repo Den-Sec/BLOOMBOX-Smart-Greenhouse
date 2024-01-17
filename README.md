@@ -31,25 +31,29 @@ BLOOMBOX is engineered to foster a perfect environment for plants, leveraging ad
 
 ## Design and Schematics
 
-Here's the schematic of our setup to give you a clear idea of how BLOOMBOX components come together:
+### Overview of BLOOMBOX Schematics
+
+Get an insight into the BLOOMBOX setup with our detailed schematic. This illustrates how various components of BLOOMBOX are interconnected. For detailed pinout information for each module, refer to our pinout guide in the repository at  `/hardware/schematics/Pinouts.md`.
 
 <p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/hardware/schematics/Schematics BLOOMBOX.png" alt="BLOOMBOX Schematic">
+  <img src="hardware/schematics/Schematics BLOOMBOX.png" alt="BLOOMBOX Schematic">
 </p>
 
-And this is what the final BLOOMBOX setup looks like in action:
+### BLOOMBOX in Action:
+
+Below are images showcasing the final assembly of BLOOMBOX. These renders give you a glimpse of what the setup looks like from different angles, providing a better understanding of its design and functionality.
 
 <p align="center">
   <table>
     <tr>
       <td>
-        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/366a92b9-4b57-436d-816b-2e192ecfaabe" alt="BLOOM-BOX Inside">
+        <img src="hardware/enclosure/3D-Renders/BLOOM-BOX Inside.png" alt="BLOOM-BOX Inside">
       </td>
       <td>
-        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/ea4bae00-6bef-4f3c-84bf-0db95853c702" alt="BLOOMBOX 45' Render">
+        <img src="hardware/enclosure/3D-Renders/BLOOM-BOX 45' Render.png" alt="BLOOMBOX 45' Render">
       </td>
       <td>
-        <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/e7ffea42-e1b6-4e57-9faa-30051d715a65" alt="BLOOM-BOX Front Render">
+        <img src="hardware/enclosure/3D-Renders/BLOOM-BOX Front Render.png" alt="BLOOM-BOX Front Render">
       </td>
     </tr>
   </table>
