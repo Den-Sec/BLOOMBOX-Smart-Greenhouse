@@ -1,0 +1,123 @@
+# CONFIGURATION FOR BLOOMBOX SMART-GREENHOUSE
+
+#Change the file name to config.txt and move it to the '/Config' folder in the SD Card.
+
+# General Settings
+
+# WiFi Settings
+WIFI_SSID = "yourSSID"
+WIFI_PASSWORD = "yourPassword"
+
+# Logging Interval (Time in milliseconds between sensor readings)
+LOG_INTERVAL = 600000  # 10 minutes
+
+
+#PLANT SETTINGS
+
+# Plant Species
+PLANT_SPECIES = "Carolina Reaper"  # Specify the species of the plant
+
+# Growth Stage Tracking
+
+# Current Growth Stage (values: "Seedling", "Vegetative", "Flowering", "Fruiting")
+CURRENT_GROWTH_STAGE = "Seedling"
+
+# Days in Current Stage (initialize to 0, will be updated as the plant progresses)
+DAYS_IN_CURRENT_STAGE = 0
+
+# Seedling Stage Settings
+
+# Temperature
+SEEDLING_TEMP_LOW_THRESHOLD = 25.0
+SEEDLING_TEMP_HIGH_THRESHOLD = 30.0
+
+# Humidity
+SEEDLING_HUMIDITY_LOW_THRESHOLD = 70.0
+SEEDLING_HUMIDITY_HIGH_THRESHOLD = 80.0
+
+# Light
+SEEDLING_LIGHT_ON_DURATION_HOURS = 18  # Adjust as needed (in hours)
+
+# Soil Humidity
+SEEDLING_SOIL_MOISTURE_LOW_THRESHOLD = 400
+SEEDLING_SOIL_MOISTURE_HIGH_THRESHOLD = 600
+
+# Duration of Seedling Stage (in days)
+SEEDLING_STAGE_DURATION_DAYS = 21  # Adjust as needed (in days)
+
+# Vegetative Stage Settings
+
+# Temperature
+VEGETATIVE_TEMP_LOW_THRESHOLD = 70.0
+VEGETATIVE_TEMP_HIGH_THRESHOLD = 80.0
+
+# Humidity
+VEGETATIVE_HUMIDITY_LOW_THRESHOLD = 60.0
+VEGETATIVE_HUMIDITY_HIGH_THRESHOLD = 70.0
+
+# Light
+VEGETATIVE_LIGHT_ON_DURATION_HOURS = 16  # Adjust as needed (in hours)
+
+# Soil Humidity
+VEGETATIVE_SOIL_MOISTURE_LOW_THRESHOLD = 350
+VEGETATIVE_SOIL_MOISTURE_HIGH_THRESHOLD = 550
+
+# Duration of Vegetative Stage (in days)
+VEGETATIVE_STAGE_DURATION_DAYS = 30  # Adjust as needed (in days)
+
+# Flowering Stage Settings
+
+# Temperature
+FLOWERING_TEMP_LOW_THRESHOLD = 70.0
+FLOWERING_TEMP_HIGH_THRESHOLD = 75.0
+
+# Humidity
+FLOWERING_HUMIDITY_LOW_THRESHOLD = 50.0
+FLOWERING_HUMIDITY_HIGH_THRESHOLD = 60.0
+
+# Light
+FLOWERING_LIGHT_ON_DURATION_HOURS = 12  # Adjust as needed (in hours)
+
+# Soil Humidity
+FLOWERING_SOIL_MOISTURE_LOW_THRESHOLD = 300
+FLOWERING_SOIL_MOISTURE_HIGH_THRESHOLD = 500
+
+# Duration of Flowering Stage (in days)
+FLOWERING_STAGE_DURATION_DAYS = 21  # Adjust as needed (in days)
+
+# Fruiting Stage Settings
+
+# Temperature
+FRUITING_TEMP_LOW_THRESHOLD = 65.0
+FRUITING_TEMP_HIGH_THRESHOLD = 75.0
+
+# Humidity
+FRUITING_HUMIDITY_LOW_THRESHOLD = 50.0
+FRUITING_HUMIDITY_HIGH_THRESHOLD = 60.0
+
+# Light
+FRUITING_LIGHT_ON_DURATION_HOURS = 12  # Adjust as needed (in hours)
+
+# Soil Humidity
+FRUITING_SOIL_MOISTURE_LOW_THRESHOLD = 350
+FRUITING_SOIL_MOISTURE_HIGH_THRESHOLD = 550
+
+# Duration of Fruiting Stage (in days)
+FRUITING_STAGE_DURATION_DAYS = 45  # Adjust as needed (in days)
+
+# Water Tank Settings
+
+# Water Level Settings
+WATER_LEVEL_MAX=305
+WATER_LEVEL_MIN=120
+
+# Sensor Calibration
+level25=205
+level50=255
+level75=280
+
+
+# Other Settings
+
+# Pump Control Settings
+PUMP_RUNTIME_SECONDS = 5  # The duration the water pump should run when triggered (in seconds)
