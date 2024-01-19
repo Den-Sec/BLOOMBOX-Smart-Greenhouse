@@ -91,14 +91,14 @@ int level25, level50, level75; //Settings for percantages values for Water Level
 void setup() {
   Serial.begin(115200);
 
+  // Load configuration from SD Card
+  loadConfiguration("/Config/config.txt");
+
   // Call the function to initialize sensors and modules
   initializeSensorsAndModules();
 
   // Call the function to create directories if not present in the SD card
   createDirectories();
-
-  // Call the function to connect to WiFi  
-  connectToWiFi();
 
   // Call the function to configure Relays  
   configureRelayPins();
@@ -115,13 +115,26 @@ void setup() {
   // Log startup message
   logStartupMessage();
 
-  // Load configuration from SD Card
-  loadConfiguration("/Config/config.txt");
+  Serial.println("tempLowThreshold");
+  Serial.println(tempLowThreshold);
+
+  Serial.println("tempLowThreshold");
+  Serial.println(WIFI_SSID);
+
+
+  // Call growthStageManager at the beginning of each loop iteration
+  growthStageManager();
+
+  // Call the function to connect to WiFi  
+  connectToWiFi();
 }
 
 void loop() {
   // Call readSensors at the beginning of each loop iteration to read from the sensors
   readSensors();
+
+  Serial.println("tempLowThreshold");
+  Serial.println(tempLowThreshold);
 
   // Call growthStageManager at the beginning of each loop iteration
   growthStageManager();
@@ -170,12 +183,24 @@ void connectToWiFi() {
   // Create the message
   String wifiConnectMessage = String(dateTimeString) + " - Connecting to:  " + WIFI_SSID + "..";
 
+  unsigned long startAttemptTime = millis(); // Record the start time
+
   // Write to SD card and Serial
   writeToSDCard(wifiConnectMessage.c_str());
   Serial.println(wifiConnectMessage);
   WiFi.begin(WIFI_SSID.c_str(), WIFI_PASSWORD.c_str());
 
   while (WiFi.status() != WL_CONNECTED) {
+    if (millis() - startAttemptTime > 30000) { // 30 seconds timeout
+      // Create the failure message
+      String wifiFailMessage = String(dateTimeString) + " - Failed to connect to WiFi: " + WIFI_SSID;
+    
+      // Write to SD card and Serial
+      writeToSDCard(wifiFailMessage.c_str());
+      Serial.println(wifiFailMessage);
+    
+      break; // Exit the while loop
+    }
     delay(500);
     Serial.print(".");
   }
