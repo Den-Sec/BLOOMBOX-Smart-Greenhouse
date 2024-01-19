@@ -11,6 +11,8 @@ WIFI_PASSWORD = "yourPassword"
 # Logging Interval (Time in milliseconds between sensor readings)
 LOG_INTERVAL = 600000  # 10 minutes
 
+# Light Starting Hour
+LIGHT_START_HOUR = 10
 
 #PLANT SETTINGS
 
