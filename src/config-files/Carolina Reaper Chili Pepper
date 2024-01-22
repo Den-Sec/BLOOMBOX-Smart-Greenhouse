@@ -15,15 +15,15 @@ LIGHT_START_HOUR = 10
 # PLANT SETTINGS
 
 # Plant Species
-PLANT_SPECIES = "Carolina Reaper"  # Specify the species of the plant
+PLANT_SPECIES = Carolina Reaper  # Specify the species of the plant
 
 # Growth Stage Tracking
 
-# Current Growth Stage (values: "Seedling", "Vegetative", "Flowering", "Fruiting")
-CURRENT_GROWTH_STAGE = "Seedling"
+# Current Growth Stage (values: "SEEDLING", "VEGETATIVE", "FLOWERING", "FRUITING")
+CURRENT_GROWTH_STAGE = SEEDLING
 
-# Days in Current Stage (initialize to 0, will be updated as the plant progresses)
-DAYS_IN_CURRENT_STAGE = 0
+# Days in Current Stage (initialize to 1, will be updated as the plant progresses)
+DAYS_IN_CURRENT_STAGE = 1
 
 # Seedling Stage Settings
 
