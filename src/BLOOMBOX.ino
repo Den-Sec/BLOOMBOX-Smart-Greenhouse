@@ -91,14 +91,16 @@ int level25, level50, level75; //Settings for percantages values for Water Level
 void setup() {
   Serial.begin(115200);
 
-  // Load configuration from SD Card
-  loadConfiguration("/Config/config.txt");
-
   // Call the function to initialize sensors and modules
   initializeSensorsAndModules();
 
   // Call the function to create directories if not present in the SD card
   createDirectories();
+
+  // Load configuration from SD Card
+  loadConfiguration();
+
+  delay(1000);
 
   // Call the function to configure Relays  
   configureRelayPins();
@@ -115,13 +117,6 @@ void setup() {
   // Log startup message
   logStartupMessage();
 
-  Serial.println("tempLowThreshold");
-  Serial.println(tempLowThreshold);
-
-  Serial.println("tempLowThreshold");
-  Serial.println(WIFI_SSID);
-
-
   // Call growthStageManager at the beginning of each loop iteration
   growthStageManager();
 
@@ -132,9 +127,6 @@ void setup() {
 void loop() {
   // Call readSensors at the beginning of each loop iteration to read from the sensors
   readSensors();
-
-  Serial.println("tempLowThreshold");
-  Serial.println(tempLowThreshold);
 
   // Call growthStageManager at the beginning of each loop iteration
   growthStageManager();
@@ -176,6 +168,7 @@ void createDirectories() {
   // Create "Config" directory if it doesn't exist
   if (!SD.exists("/Config")) {
     SD.mkdir("/Config");
+    Serial.println("config was made!!!!!!!");
   }
 }
 
@@ -298,13 +291,13 @@ void readAndProcessWaterLevel() {
 void updateGrowthStage() {
   if (DAYS_IN_CURRENT_STAGE > currentStageDuration) {
     // Logic for stage transition
-    if (CURRENT_GROWTH_STAGE == "SEEDLING") {
+    if (CURRENT_GROWTH_STAGE.equals("SEEDLING")) {
       CURRENT_GROWTH_STAGE = "VEGETATIVE";
-    } else if (CURRENT_GROWTH_STAGE == "VEGETATIVE") {
+    } else if (CURRENT_GROWTH_STAGE.equals("VEGETATIVE")) {
       CURRENT_GROWTH_STAGE = "FLOWERING";
-    } else if (CURRENT_GROWTH_STAGE == "FLOWERING") {
+    } else if (CURRENT_GROWTH_STAGE.equals("FLOWERING")) {
       CURRENT_GROWTH_STAGE = "FRUITING";
-    } else if (CURRENT_GROWTH_STAGE == "FRUITING") {
+    } else if (CURRENT_GROWTH_STAGE.equals("FRUITING")) {
       CURRENT_GROWTH_STAGE = "FLOWERING";
     } 
 
@@ -316,7 +309,7 @@ void updateGrowthStage() {
 
 void growthStageManager() {
   // Determine the current growth stage and set appropriate values
-  if (CURRENT_GROWTH_STAGE == "SEEDLING") {
+  if (CURRENT_GROWTH_STAGE.equals("SEEDLING")) {
     tempLowThreshold = SEEDLING_TEMP_LOW_THRESHOLD;
     tempHighThreshold = SEEDLING_TEMP_HIGH_THRESHOLD;
     humidityLowThreshold = SEEDLING_HUMIDITY_LOW_THRESHOLD;
@@ -325,7 +318,7 @@ void growthStageManager() {
     soilMoistureLowThreshold = SEEDLING_SOIL_MOISTURE_LOW_THRESHOLD;
     soilMoistureHighThreshold = SEEDLING_SOIL_MOISTURE_HIGH_THRESHOLD;
     currentStageDuration = SEEDLING_STAGE_DURATION_DAYS;
-  } else if (CURRENT_GROWTH_STAGE == "VEGETATIVE") {
+  } else if (CURRENT_GROWTH_STAGE.equals("VEGETATIVE")) {
     tempLowThreshold = VEGETATIVE_TEMP_LOW_THRESHOLD;
     tempHighThreshold = VEGETATIVE_TEMP_HIGH_THRESHOLD;
     humidityLowThreshold = VEGETATIVE_HUMIDITY_LOW_THRESHOLD;
@@ -334,7 +327,7 @@ void growthStageManager() {
     soilMoistureLowThreshold = VEGETATIVE_SOIL_MOISTURE_LOW_THRESHOLD;
     soilMoistureHighThreshold = VEGETATIVE_SOIL_MOISTURE_HIGH_THRESHOLD;
     currentStageDuration = VEGETATIVE_STAGE_DURATION_DAYS;
-  } else if (CURRENT_GROWTH_STAGE == "FLOWERING") {
+  } else if (CURRENT_GROWTH_STAGE.equals("FLOWERING")) {
     tempLowThreshold = FLOWERING_TEMP_LOW_THRESHOLD;
     tempHighThreshold = FLOWERING_TEMP_HIGH_THRESHOLD;
     humidityLowThreshold = FLOWERING_HUMIDITY_LOW_THRESHOLD;
@@ -343,7 +336,7 @@ void growthStageManager() {
     soilMoistureLowThreshold = FLOWERING_SOIL_MOISTURE_LOW_THRESHOLD;
     soilMoistureHighThreshold = FLOWERING_SOIL_MOISTURE_HIGH_THRESHOLD;
     currentStageDuration = FLOWERING_STAGE_DURATION_DAYS;
-  } else if (CURRENT_GROWTH_STAGE == "FRUITING") {
+  } else if (CURRENT_GROWTH_STAGE.equals("FRUITING")) {
     tempLowThreshold = FRUITING_TEMP_LOW_THRESHOLD;
     tempHighThreshold = FRUITING_TEMP_HIGH_THRESHOLD;
     humidityLowThreshold = FRUITING_HUMIDITY_LOW_THRESHOLD;
@@ -386,42 +379,60 @@ void logToSDCard() {
 }
 
 String createDataStringForLogs() {
-  String dataString = "";
-  dataString += String(now.year(), DEC) + "/";
-  dataString += String(now.month(), DEC) + "/";
-  dataString += String(now.day(), DEC) + " ";
-  dataString += String(now.hour(), DEC) + ":";
-  dataString += String(now.minute(), DEC) + ":";
-  dataString += String(now.second(), DEC) + " - Humidity: ";
-  dataString += String(humidity) + " %, Ambient Temp: ";
-  dataString += String(ambientTemp) + " C, Water Level Percent: ";
-  dataString += String(waterLevel) + " %";
-  dataString += ", Soil Moisture: " + String(soilMoisture);
+    String dataString = "Plant: " + PLANT_SPECIES;
+    dataString += ", Stage: " + CURRENT_GROWTH_STAGE;
+    dataString += ", Days in Stage: " + String(DAYS_IN_CURRENT_STAGE);
+    dataString += ", Light turn on at: " + String(LIGHT_START_HOUR);
+    dataString += ", The log is set at: " + String(LOG_INTERVAL);
+    dataString += " - ";
 
-  return dataString;
+    // Now append the rest of your log data
+    dataString += String(now.year(), DEC) + "/";
+    dataString += String(now.month(), DEC) + "/";
+    dataString += String(now.day(), DEC) + " ";
+    dataString += String(now.hour(), DEC) + ":";
+    dataString += String(now.minute(), DEC) + ":";
+    dataString += String(now.second(), DEC) + " - Humidity: ";
+    dataString += String(humidity) + " %, Ambient Temp: ";
+    dataString += String(ambientTemp) + " C, Water Level Percent: ";
+    dataString += String(waterLevel) + " %";
+    dataString += ", Soil Moisture: " + String(soilMoisture);
+
+    return dataString;
 }
 
+
 void controlRelays() {
-    if (ambientTemp > tempHighThreshold) {
-        digitalWrite(RELAY_PIN3, LOW); // Turn on Fan relay
-        digitalWrite(RELAY_PIN4, LOW); // Turn on Fan relay 
-    } else if (ambientTemp <= tempLowThreshold) {
-        digitalWrite(RELAY_PIN3, HIGH); // Turn off Fan relay 
-        digitalWrite(RELAY_PIN4, HIGH); // Turn off Fan relay 
-    }
+  String logMessage;
+  updateCurrentTime(); // Update current time
+  String currentTime = String(now.year(), DEC) + "/" + String(now.month(), DEC) + "/" + String(now.day(), DEC) + " " + String(now.hour(), DEC) + ":" + String(now.minute(), DEC) + ":" + String(now.second(), DEC);
+  int currentHour = now.hour(); // Get the current hour
 
-    // Control light based on lightHours
-    updateCurrentTime(); // Update current time
-    int currentHour = now.hour(); // Get the current hour
+  if (ambientTemp > tempHighThreshold) {
+    digitalWrite(RELAY_PIN3, LOW); // Turn on Fan relay
+    digitalWrite(RELAY_PIN4, LOW); // Turn on Fan relay
+    logMessage = logMessage = currentTime + " - Fan relays turned ON due to high temperature."; 
+    writeToSDCard(logMessage.c_str());
+  } else if (ambientTemp <= tempLowThreshold) {
+    digitalWrite(RELAY_PIN3, HIGH); // Turn off Fan relay 
+    digitalWrite(RELAY_PIN4, HIGH); // Turn off Fan relay
+    logMessage = logMessage = currentTime + " - Fan relays turned OFF due to low temperature.";
+    writeToSDCard(logMessage.c_str());
+  }
 
-    // Assuming lights should be on from (e.g., 6 AM to 6 AM + lightHours)
-    int lightEndHour = LIGHT_START_HOUR + lightHours; // Calculate ending hour
+  // Control light based on lightHours
+  // Assuming lights should be on from (e.g., 6 AM to 6 AM + lightHours)
+  int lightEndHour = LIGHT_START_HOUR + lightHours; // Calculate ending hour
 
-    if (currentHour >= LIGHT_START_HOUR && currentHour < lightEndHour) {
-        digitalWrite(RELAY_PIN2, LOW); // Turn on Light relay
-    } else {
-        digitalWrite(RELAY_PIN2, HIGH); // Turn off Light relay
-    }
+  if (currentHour >= LIGHT_START_HOUR && currentHour < lightEndHour) {
+    digitalWrite(RELAY_PIN2, LOW); // Turn on Light relay
+    logMessage = logMessage = currentTime + " - Light relay turned ON.";
+    writeToSDCard(logMessage.c_str());
+  } else {
+    digitalWrite(RELAY_PIN2, HIGH); // Turn off Light relay
+    logMessage = logMessage = currentTime + " - Light relay turned OFF.";
+    writeToSDCard(logMessage.c_str());
+  }
 }
 
 void writeToSDCard(const char * dataString) {
@@ -440,16 +451,19 @@ void writeToSDCard(const char * dataString) {
     logFile.close();
 }
 
-void loadConfiguration(const char* filename) {
-  Serial.print("Loading configuration from: ");
-  Serial.println(filename);
+void loadConfiguration() {
 
-  File configFile = SD.open(filename);
+  Serial.print("Loading configuration from:");
+  Serial.println("/Config/config.txt");
+
+  // Open the file on the SD card
+  File configFile = SD.open("/Config/config.txt");
   if (!configFile) {
     Serial.println("Failed to open configuration file");
     return;
   }
 
+  // Read from the file until there's nothing else in it
   while (configFile.available()) {
     String line = configFile.readStringUntil('\n');
     line.trim(); // Trim whitespace from the line
@@ -473,6 +487,11 @@ void loadConfiguration(const char* filename) {
     String key = line.substring(0, index);
     String value = line.substring(index + 1);
 
+    key.replace("\r", "");  // Remove carriage return character
+    key.trim();             // Trim whitespace from the key
+    value.replace("\r", "");  // Remove carriage return character
+    value.trim();             // Trim whitespace from the value
+
     Serial.print("Key: ");
     Serial.print(key);
     Serial.print(", Value: ");
@@ -481,111 +500,113 @@ void loadConfiguration(const char* filename) {
     // Get all variables values
 
     // WiFi Settings
-    if (key == "WIFI_SSID") {
+    if (key.equals("WIFI_SSID")) {
+      Serial.print("WIFI OKKK ");
       WIFI_SSID = value;
-    } else if (key == "WIFI_PASSWORD") {
+    } else if (key.equals("WIFI_PASSWORD")) {
       WIFI_PASSWORD = value;
+      Serial.print("WIFI pass OKKK ");
     }
 
     // Log time frequencies
-    else if (key == "LOG_INTERVAL") {
+    else if (key.equals("LOG_INTERVAL")) {
       LOG_INTERVAL = value.toInt();
     }
 
     // Light Settings
-    if (key == "LIGHT_START_HOUR") {
+    else if (key.equals("LIGHT_START_HOUR")) {
       LIGHT_START_HOUR = value.toInt();
     }
 
     // General Plant Info
-    else if (key == "PLANT_SPECIES") {
+    else if (key.equals("PLANT_SPECIES")) {
       PLANT_SPECIES = value;
-    } else if (key == "CURRENT_GROWTH_STAGE") {
+    } else if (key.equals("CURRENT_GROWTH_STAGE")) {
       CURRENT_GROWTH_STAGE = value;
-    } else if (key == "DAYS_IN_CURRENT_STAGE") {
+    } else if (key.equals("DAYS_IN_CURRENT_STAGE")) {
       DAYS_IN_CURRENT_STAGE = value.toInt();
     }
 
     // Temperature Settings for Different Stages
-    else if (key == "SEEDLING_TEMP_LOW_THRESHOLD") {
+    else if (key.equals("SEEDLING_TEMP_LOW_THRESHOLD")) {
       SEEDLING_TEMP_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "SEEDLING_TEMP_HIGH_THRESHOLD") {
+    } else if (key.equals("SEEDLING_TEMP_HIGH_THRESHOLD")) {
       SEEDLING_TEMP_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_TEMP_LOW_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_TEMP_LOW_THRESHOLD")) {
       VEGETATIVE_TEMP_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_TEMP_HIGH_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_TEMP_HIGH_THRESHOLD")) {
       VEGETATIVE_TEMP_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_TEMP_LOW_THRESHOLD") {
+    } else if (key.equals("FLOWERING_TEMP_LOW_THRESHOLD")) {
       FLOWERING_TEMP_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_TEMP_HIGH_THRESHOLD") {
+    } else if (key.equals("FLOWERING_TEMP_HIGH_THRESHOLD")) {
       FLOWERING_TEMP_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_TEMP_LOW_THRESHOLD") {
+    } else if (key.equals("FRUITING_TEMP_LOW_THRESHOLD")) {
       FRUITING_TEMP_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_TEMP_HIGH_THRESHOLD") {
+    } else if (key.equals("FRUITING_TEMP_HIGH_THRESHOLD")) {
       FRUITING_TEMP_HIGH_THRESHOLD = value.toFloat();
     }
 
     // Humidity Settings for Different Stages
-    else if (key == "SEEDLING_HUMIDITY_LOW_THRESHOLD") {
+    else if (key.equals("SEEDLING_HUMIDITY_LOW_THRESHOLD")) {
       SEEDLING_HUMIDITY_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "SEEDLING_HUMIDITY_HIGH_THRESHOLD") {
+    } else if (key.equals("SEEDLING_HUMIDITY_HIGH_THRESHOLD")) {
       SEEDLING_HUMIDITY_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_HUMIDITY_LOW_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_HUMIDITY_LOW_THRESHOLD")) {
       VEGETATIVE_HUMIDITY_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_HUMIDITY_HIGH_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_HUMIDITY_HIGH_THRESHOLD")) {
       VEGETATIVE_HUMIDITY_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_HUMIDITY_LOW_THRESHOLD") {
+    } else if (key.equals("FLOWERING_HUMIDITY_LOW_THRESHOLD")) {
       FLOWERING_HUMIDITY_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_HUMIDITY_HIGH_THRESHOLD") {
+    } else if (key.equals("FLOWERING_HUMIDITY_HIGH_THRESHOLD")) {
       FLOWERING_HUMIDITY_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_HUMIDITY_LOW_THRESHOLD") {
+    } else if (key.equals("FRUITING_HUMIDITY_LOW_THRESHOLD")) {
       FRUITING_HUMIDITY_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_HUMIDITY_HIGH_THRESHOLD") {
+    } else if (key.equals("FRUITING_HUMIDITY_HIGH_THRESHOLD")) {
       FRUITING_HUMIDITY_HIGH_THRESHOLD = value.toFloat();
     }
 
     // Light Settings for Different Stages
-    else if (key == "SEEDLING_LIGHT_ON_DURATION_HOURS") {
+    else if (key.equals("SEEDLING_LIGHT_ON_DURATION_HOURS")) {
       SEEDLING_LIGHT_ON_DURATION_HOURS = value.toInt();
-    } else if (key == "VEGETATIVE_LIGHT_ON_DURATION_HOURS") {
+    } else if (key.equals("VEGETATIVE_LIGHT_ON_DURATION_HOURS")) {
       VEGETATIVE_LIGHT_ON_DURATION_HOURS = value.toInt();
-    } else if (key == "FLOWERING_LIGHT_ON_DURATION_HOURS") {
+    } else if (key.equals("FLOWERING_LIGHT_ON_DURATION_HOURS")) {
       FLOWERING_LIGHT_ON_DURATION_HOURS = value.toInt();
-    } else if (key == "FRUITING_LIGHT_ON_DURATION_HOURS") {
+    } else if (key.equals("FRUITING_LIGHT_ON_DURATION_HOURS")) {
       FRUITING_LIGHT_ON_DURATION_HOURS = value.toInt();
     }
 
     // Soil Humidity Settings for Different Stages
-    else if (key == "SEEDLING_SOIL_MOISTURE_LOW_THRESHOLD") {
+    else if (key.equals("SEEDLING_SOIL_MOISTURE_LOW_THRESHOLD")) {
       SEEDLING_SOIL_MOISTURE_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "SEEDLING_SOIL_MOISTURE_HIGH_THRESHOLD") {
+    } else if (key.equals("SEEDLING_SOIL_MOISTURE_HIGH_THRESHOLD")) {
       SEEDLING_SOIL_MOISTURE_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_SOIL_MOISTURE_LOW_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_SOIL_MOISTURE_LOW_THRESHOLD")) {
       VEGETATIVE_SOIL_MOISTURE_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "VEGETATIVE_SOIL_MOISTURE_HIGH_THRESHOLD") {
+    } else if (key.equals("VEGETATIVE_SOIL_MOISTURE_HIGH_THRESHOLD")) {
       VEGETATIVE_SOIL_MOISTURE_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_SOIL_MOISTURE_LOW_THRESHOLD") {
+    } else if (key.equals("FLOWERING_SOIL_MOISTURE_LOW_THRESHOLD")) {
       FLOWERING_SOIL_MOISTURE_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FLOWERING_SOIL_MOISTURE_HIGH_THRESHOLD") {
+    } else if (key.equals("FLOWERING_SOIL_MOISTURE_HIGH_THRESHOLD")) {
       FLOWERING_SOIL_MOISTURE_HIGH_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_SOIL_MOISTURE_LOW_THRESHOLD") {
+    } else if (key.equals("FRUITING_SOIL_MOISTURE_LOW_THRESHOLD")) {
       FRUITING_SOIL_MOISTURE_LOW_THRESHOLD = value.toFloat();
-    } else if (key == "FRUITING_SOIL_MOISTURE_HIGH_THRESHOLD") {
+    } else if (key.equals("FRUITING_SOIL_MOISTURE_HIGH_THRESHOLD")) {
       FRUITING_SOIL_MOISTURE_HIGH_THRESHOLD = value.toFloat();
     }
 
     // Water Tank Settings
-    else if (key == "WATER_LEVEL_MAX") {
+    else if (key.equals("WATER_LEVEL_MAX")) {
       WATER_LEVEL_MAX = value.toInt();
-    } else if (key == "WATER_LEVEL_MIN") {
+    } else if (key.equals("WATER_LEVEL_MIN")) {
       WATER_LEVEL_MIN = value.toInt();
-    } else if (key == "level25") {
+    } else if (key.equals("level25")) {
       level25 = value.toInt();
-    } else if (key == "level50") {
+    } else if (key.equals("level50")) {
       level50 = value.toInt();
-    } else if (key == "level75") {
+    } else if (key.equals("level75")) {
       level75 = value.toInt();
-    }
+    } else { Serial.println("Not Assigned: " + value);}
   }
   configFile.close();
 }
