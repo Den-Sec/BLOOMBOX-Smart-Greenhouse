@@ -3,8 +3,9 @@
 # General Settings
 
 # WiFi Settings
-WIFI_SSID = "yourSSID"
-WIFI_PASSWORD = "yourPassword"
+WIFI_SSID = yourSSID
+WIFI_PASSWORD = yourPassword
+IP_CONFIG = dhcp # if set to "dhcp" it uses Dynamic IP
 
 # Logging Interval (Time in milliseconds between sensor readings)
 LOG_INTERVAL = 600000  # 1 minutes
