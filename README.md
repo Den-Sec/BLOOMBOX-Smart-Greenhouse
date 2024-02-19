@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/assets/156823722/289e457c-592f-4e86-87cc-6aa00146be92" alt="BLOOMBOX Logo" width="150">
+  <img src="https://github.com/Den-Sec/BLOOMBOX-Smart-Greenhouse/blob/main/assets/images/logo.png" alt="BLOOMBOX Logo" width="150">
 </p>
 
 # BLOOMBOX - Smart Greenhouse
